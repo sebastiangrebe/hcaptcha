@@ -30,14 +30,14 @@
 </script>
 <% end %>
 
-<div class="g-hcaptcha"
-    data-sitekey="<%= @public_key %>"
-    data-theme="<%= @options[:theme] %>"
-    data-type="<%= @options[:type] %>"
-    data-tabindex="<%= @options[:tabindex] %>"
-    data-size="<%= @options[:size] %>"
-    data-badge="<%= @options[:badge] %>"
-    data-callback="<%= @callback %>">
+<div class="h-captcha"
+  data-sitekey="<%= @public_key %>"
+  data-theme="<%= @options[:theme] %>"
+  data-type="<%= @options[:type] %>"
+  data-tabindex="<%= @options[:tabindex] %>"
+  data-size="<%= @options[:size] %>"
+  data-badge="<%= @options[:badge] %>"
+  data-callback="<%= @callback %>">
 </div>
 
 <%= if @options[:noscript] do %>
