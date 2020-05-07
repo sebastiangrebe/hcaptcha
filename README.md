@@ -1,40 +1,28 @@
-# Recaptcha
+# Hcaptcha
 
-[![Build Status](https://travis-ci.org/samueljseay/recaptcha.svg?branch=master)](https://travis-ci.org/samueljseay/recaptcha)
-[![Coverage Status](https://coveralls.io/repos/github/samueljseay/recaptcha/badge.svg?branch=master)](https://coveralls.io/github/samueljseay/recaptcha)
-[![Hex.pm](https://img.shields.io/badge/Hex-v2.1.1-green.svg)](https://hexdocs.pm/recaptcha)
+[![Hex.pm](https://img.shields.io/badge/Hex-v2.1.1-green.svg)](https://hexdocs.pm/hcaptcha)
 
-A simple Elixir package for implementing [reCAPTCHA] in Elixir applications.
+A simple Elixir package for implementing [hCAPTCHA] in Elixir applications.
 
-[reCAPTCHA]: http://www.google.com/recaptcha
-
-## Migration from 1.x
-
-### Breaking Changes
-
-1. Template functionality is now in a separate module: `Recaptcha.Template`. Please note: in future templating may move to a Phoenix specific package.
-2. `verify` API has changed, see the code for documentation of the new API.
-
-Most other questions about 2.x should be answered by looking over the documentation and the code. Please raise an issue
-if you have any problems with migrating.
+[hCAPTCHA]: https://www.hcaptcha.com/
 
 ## Installation
 
-1. Add recaptcha to your `mix.exs` dependencies
+1. Add hcaptcha to your `mix.exs` dependencies
 
 ```elixir
   defp deps do
     [
-      {:recaptcha, "~> 3.0"},
+      {:hcaptcha, "~> 1.0"},
     ]
   end
 ```
 
-2. List `:recaptcha` as an application dependency
+2. List `:hcaptcha` as an application dependency
 
 ```elixir
   def application do
-    [ extra_applications: [:recaptcha] ]
+    [ extra_applications: [:hcaptcha] ]
   end
 ```
 
@@ -42,56 +30,54 @@ if you have any problems with migrating.
 
 ## Config
 
-By default the public and private keys are loaded via the `RECAPTCHA_PUBLIC_KEY` and `RECAPTCHA_PRIVATE_KEY` environment variables.
+By default the public and private keys are loaded via the `HCAPTCHA_PUBLIC_KEY` and `HCAPTCHA_PRIVATE_KEY` environment variables.
 
 ```elixir
-  config :recaptcha,
-    public_key: {:system, "RECAPTCHA_PUBLIC_KEY"},
-    secret: {:system, "RECAPTCHA_PRIVATE_KEY"}
+  config :hcaptcha,
+    public_key: {:system, "HCAPTCHA_PUBLIC_KEY"},
+    secret: {:system, "HCAPTCHA_PRIVATE_KEY"}
 ```
 
 ### JSON Decoding
 
-By default `reCaptcha` will use `Jason` to decode JSON responses, this can be changed as such:
+By default `hCaptcha` will use `Jason` to decode JSON responses, this can be changed as such:
 
 ```elixir
-  config :recaptcha, :json_library, Poison
+  config :hcaptcha, :json_library, Poison
 ```
 
 ## Usage
 
 ### Render the Widget
 
-Use `raw` (if you're using Phoenix.HTML) and `Recaptcha.Template.display/1` methods to render the captcha widget.
+Use `raw` (if you're using Phoenix.HTML) and `Hcaptcha.Template.display/1` methods to render the captcha widget.
 
-For recaptcha with checkbox
+For hcaptcha with checkbox
 ```html
 <form name="someform" method="post" action="/somewhere">
   ...
-  <%= raw Recaptcha.Template.display %>
+  <%= raw Hcaptcha.Template.display %>
   ...
 </form>
 ```
 
-For invisible recaptcha
+For invisible hcaptcha
 ```html
 <form name="someform" method="post" action="/somewhere">
   ...
-  <%= raw Recaptcha.Template.display(size: "invisible") %>
+  <%= raw Hcaptcha.Template.display(size: "invisible") %>
 </form>
   ...
 ```
 
-To change the position of the invisible recaptcha, use an option badge. See https://developers.google.com/recaptcha/docs/invisible on the date-badge.
-
-Since recaptcha loads Javascript code asynchronously, you cannot immediately submit the captcha form.
+Since hcaptcha loads Javascript code asynchronously, you cannot immediately submit the captcha form.
 If you have logic that needs to know if the captcha code has already been loaded (for example disabling submit button until fully loaded), it is possible to pass in a JS-callback that will be called once the captcha has finished loading.
 This can be done as follows:
 
 ```html
 <form name="someform" method="post" action="/somewhere">
   ...
-  <%= raw Recaptcha.Template.display(onload: "myOnLoadCallback") %>
+  <%= raw Hcaptcha.Template.display(onload: "myOnLoadCallback") %>
 </form>
   ...
 ```
@@ -109,16 +95,16 @@ function myOnLoadCallback() {
 Option                  | Action                                                 | Default
 :---------------------- | :----------------------------------------------------- | :------------------------
 `noscript`              | Renders default noscript code provided by google       | `false`
-`public_key`            | Sets key to the `data-sitekey` reCaptcha div attribute | Public key from the config file
-`hl`                    | Sets the language of the reCaptcha                     | en
+`public_key`            | Sets key to the `data-sitekey` hCaptcha div attribute | Public key from the config file
+`hl`                    | Sets the language of the hCaptcha                     | en
 
 ### Verify API
 
-Recaptcha provides the `verify/2` method. Below is an example using a Phoenix controller action:
+Hcaptcha provides the `verify/2` method. Below is an example using a Phoenix controller action:
 
 ```elixir
   def create(conn, params) do
-    case Recaptcha.verify(params["g-recaptcha-response"]) do
+    case Hcaptcha.verify(params["h-aptcha-response"]) do
       {:ok, response} -> do_something
       {:error, errors} -> handle_error
     end
@@ -127,9 +113,9 @@ Recaptcha provides the `verify/2` method. Below is an example using a Phoenix co
 
 `verify` method sends a `POST` request to the reCAPTCHA API and returns 2 possible values:
 
-`{:ok, %Recaptcha.Response{challenge_ts: timestamp, hostname: host}}` -> The captcha is valid, see the [documentation](https://developers.google.com/recaptcha/docs/verify#api-response) for more details.
+`{:ok, %Hcaptcha.Response{challenge_ts: timestamp, hostname: host}}` -> The captcha is valid, see the [documentation](https://developers.google.com/hcaptcha/docs/verify#api-response) for more details.
 
-`{:error, errors}` -> `errors` contains atomised versions of the errors returned by the API, See the [error documentation](https://developers.google.com/recaptcha/docs/verify#error-code-reference) for more details. Errors caused by timeouts in HTTPoison or Jason encoding are also returned as atoms. If the recaptcha request succeeds but the challenge is failed, a `:challenge_failed` error is returned.
+`{:error, errors}` -> `errors` contains atomised versions of the errors returned by the API, See the [error documentation](https://developers.google.com/hcaptcha/docs/verify#error-code-reference) for more details. Errors caused by timeouts in HTTPoison or Jason encoding are also returned as atoms. If the hcaptcha request succeeds but the challenge is failed, a `:challenge_failed` error is returned.
 
 `verify` method also accepts a keyword list as the third parameter with the following options:
 
@@ -137,29 +123,29 @@ Option                  | Action                                                
 :---------------------- | :----------------------------------------------------- | :------------------------
 `timeout`               | Time to wait before timeout                            | 5000 (ms)
 `secret`                | Private key to send as a parameter of the API request  | Private key from the config file
-`remote_ip`             | Optional. The user's IP address, used by reCaptcha     | no default
+`remote_ip`             | Optional. The user's IP address, used by hCaptcha     | no default
 
 
 ## Testing
 
-In order to test your endpoints you should set the secret key to the following value in order to receive a positive result from all queries to the Recaptcha engine.
+In order to test your endpoints you should set the secret key to the following value in order to receive a positive result from all queries to the Hcaptcha engine.
 
 ```
-config :recaptcha,
+config :hcaptcha,
   secret: "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
 ```
 
 Setting up tests without network access can be done also. When configured as such a positive or negative result can be generated locally.
 
 ```
-config :recaptcha,
-  http_client: Recaptcha.Http.MockClient,
+config :hcaptcha,
+  http_client: Hcaptcha.Http.MockClient,
   secret: "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
 
 
-  {:ok, _details} = Recaptcha.verify("valid_response")
+  {:ok, _details} = Hcaptcha.verify("valid_response")
 
-  {:error, _details} = Recaptcha.verify("invalid_response")
+  {:error, _details} = Hcaptcha.verify("invalid_response")
 
 ```
 

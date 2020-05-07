@@ -1,14 +1,14 @@
-defmodule Recaptcha.Template do
+defmodule Hcaptcha.Template do
   @moduledoc """
-    Responsible for rendering boilerplate recaptcha HTML code, supports noscript fallback.
+    Responsible for rendering boilerplate hcaptcha HTML code, supports noscript fallback.
 
-    [Some](https://developers.google.com/recaptcha/docs/display#explicit_render)
+    [Some](https://developers.google.com/hcaptcha/docs/display#explicit_render)
     functionality is not currently supported.
 
     In future this module may be separated out into a Phoenix specific library.
   """
   require Elixir.EEx
-  alias Recaptcha.Config
+  alias Hcaptcha.Config
 
   EEx.function_from_file(:defp, :render_template, "lib/template.html.eex", [
     :assigns
@@ -21,11 +21,11 @@ defmodule Recaptcha.Template do
   """
   def display(options \\ []) do
     public_key =
-      options[:public_key] || Config.get_env(:recaptcha, :public_key)
+      options[:public_key] || Config.get_env(:hcaptcha, :public_key)
 
     callback =
       if options[:size] == "invisible" && is_nil(options[:callback]) do
-        "recaptchaCallback"
+        "hcaptchaCallback"
       else
         options[:callback]
       end

@@ -1,10 +1,10 @@
-defmodule Recaptcha.Mixfile do
+defmodule Hcaptcha.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :recaptcha,
-      version: "3.0.0",
+      app: :hcaptcha,
+      version: "1.0.0",
       elixir: "~> 1.6",
       description: description(),
       deps: deps(),
@@ -35,8 +35,8 @@ defmodule Recaptcha.Mixfile do
 
   defp description do
     """
-    A simple reCaptcha package for Elixir applications, provides verification
-    and templates for rendering forms with the reCaptcha widget
+    A simple hCaptcha package for Elixir applications, provides verification
+    and templates for rendering forms with the hCaptcha widget
     """
   end
 
@@ -54,9 +54,9 @@ defmodule Recaptcha.Mixfile do
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
-      maintainers: ["Samuel Seay", "Nikita Sobolev", "Michael JustMikey"],
+      maintainers: ["Sebastian Grebe"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/samueljseay/recaptcha"}
+      links: %{"GitHub" => "https://github.com/Sebi55/hcaptcha"}
     ]
   end
 end

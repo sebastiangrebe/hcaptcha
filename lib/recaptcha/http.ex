@@ -1,21 +1,21 @@
-defmodule Recaptcha.Http do
+defmodule Hcaptcha.Http do
   @moduledoc """
    Responsible for managing HTTP requests to the reCAPTCHA API
   """
 
-  alias Recaptcha.Config
+  alias Hcaptcha.Config
 
   @headers [
     {"Content-type", "application/x-www-form-urlencoded"},
     {"Accept", "application/json"}
   ]
 
-  @default_verify_url "https://www.google.com/recaptcha/api/siteverify"
+  @default_verify_url "https://hcaptcha.com/siteverify"
 
   @doc """
   Sends an HTTP request to the reCAPTCHA version 2.0 API.
 
-  See the [docs](https://developers.google.com/recaptcha/docs/verify#api-response)
+  See the [docs](https://developers.google.com/hcaptcha/docs/verify#api-response)
   for more details on the API response.
 
   ## Options
@@ -29,7 +29,7 @@ defmodule Recaptcha.Http do
       "challenge_ts" => ts,
       "hostname" => host,
       "error-codes" => errors
-    }} = Recaptcha.Http.request_verification(%{
+    }} = Hcaptcha.Http.request_verification(%{
       secret: "secret",
       response: "response",
       remote_ip: "remote_ip"
@@ -38,9 +38,9 @@ defmodule Recaptcha.Http do
   @spec request_verification(binary, timeout: integer) ::
           {:ok, map} | {:error, [atom]}
   def request_verification(body, options \\ []) do
-    timeout = options[:timeout] || Config.get_env(:recaptcha, :timeout, 5000)
-    url = Config.get_env(:recaptcha, :verify_url, @default_verify_url)
-    json = Application.get_env(:recaptcha, :json_library, Jason)
+    timeout = options[:timeout] || Config.get_env(:hcaptcha, :timeout, 5000)
+    url = Config.get_env(:hcaptcha, :verify_url, @default_verify_url)
+    json = Application.get_env(:hcaptcha, :json_library, Jason)
 
     result =
       with {:ok, response} <-

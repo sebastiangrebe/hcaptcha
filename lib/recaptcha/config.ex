@@ -1,4 +1,4 @@
-defmodule Recaptcha.Config do
+defmodule Hcaptcha.Config do
   @moduledoc """
   Provides application/system environment variable lookup at runtime
   """
