@@ -15,7 +15,7 @@ defmodule Hcaptcha.Template do
   ])
 
   @doc """
-  Returns a string with reCAPTCHA code
+  Returns a string with hCAPTCHA code
 
   To convert the string to html code, use Phoenix.HTML.Raw/1 method
   """

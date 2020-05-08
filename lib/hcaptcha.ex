@@ -1,6 +1,6 @@
 defmodule Hcaptcha do
   @moduledoc """
-    A module for verifying reCAPTCHA version 2.0 response strings.
+    A module for verifying hCAPTCHA version 2.0 response strings.
 
     See the [documentation](https://developers.google.com/hcaptcha/docs/verify)
     for more details.
@@ -11,7 +11,7 @@ defmodule Hcaptcha do
   @http_client Application.get_env(:hcaptcha, :http_client, Http)
 
   @doc """
-  Verifies a reCAPTCHA response string.
+  Verifies a hCAPTCHA response string.
 
   ## Options
 

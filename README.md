@@ -111,7 +111,7 @@ Hcaptcha provides the `verify/2` method. Below is an example using a Phoenix con
   end
 ```
 
-`verify` method sends a `POST` request to the reCAPTCHA API and returns 2 possible values:
+`verify` method sends a `POST` request to the hCAPTCHA API and returns 2 possible values:
 
 `{:ok, %Hcaptcha.Response{challenge_ts: timestamp, hostname: host}}` -> The captcha is valid, see the [documentation](https://developers.google.com/hcaptcha/docs/verify#api-response) for more details.
 

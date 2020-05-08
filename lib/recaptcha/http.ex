@@ -1,6 +1,6 @@
 defmodule Hcaptcha.Http do
   @moduledoc """
-   Responsible for managing HTTP requests to the reCAPTCHA API
+   Responsible for managing HTTP requests to the hCAPTCHA API
   """
 
   alias Hcaptcha.Config
@@ -13,7 +13,7 @@ defmodule Hcaptcha.Http do
   @default_verify_url "https://hcaptcha.com/siteverify"
 
   @doc """
-  Sends an HTTP request to the reCAPTCHA version 2.0 API.
+  Sends an HTTP request to the hCAPTCHA version 2.0 API.
 
   See the [docs](https://developers.google.com/hcaptcha/docs/verify#api-response)
   for more details on the API response.

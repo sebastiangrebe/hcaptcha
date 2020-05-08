@@ -1,6 +1,6 @@
 defmodule Hcaptcha.Response do
   @moduledoc """
-    A struct representing the successful hcaptcha response from the reCAPTCHA API.
+    A struct representing the successful hcaptcha response from the hCAPTCHA API.
   """
   defstruct challenge_ts: "", hostname: ""
 

@@ -4,7 +4,7 @@ defmodule HcaptchaTest do
   # see https://developers.google.com/hcaptcha/docs/faq#id-like-to-run-automated-tests-with-hcaptcha-v2-what-should-i-do
   @hCaptcha_test_secret "0x0000000000000000000000000000000000000000"
 
-  test "When the supplied g-hcaptcha-response is invalid, multiple errors are returned" do
+  test "When the supplied hcaptcha-response is invalid, multiple errors are returned" do
     assert {:error, messages} = Hcaptcha.verify("not_valid")
     assert messages == [:invalid_input_response, :invalid_input_secret]
   end
