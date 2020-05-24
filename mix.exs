@@ -47,7 +47,7 @@ defmodule Hcaptcha.Mixfile do
       {:httpoison, ">= 0.12.0"},
       {:jason, "~> 1.0", optional: true},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, "0.19.3", only: :dev},
       {:dialyxir, "~> 0.5", only: [:dev]},
       {:excoveralls, "~> 0.7.1", only: :test}
     ]

@@ -20,7 +20,7 @@ The repo is works for me but is not tested that all configuration options or cal
 ```elixir
   defp deps do
     [
-      {:hcaptcha, "~> 1.0"},
+      {:hcaptcha, "~> 0.0.1"},
     ]
   end
 ```
