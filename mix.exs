@@ -4,7 +4,9 @@ defmodule Hcaptcha.Mixfile do
   def project do
     [
       app: :hcaptcha,
-      version: "1.0.0",
+      name: "hcaptcha",
+      source_url: "https://github.com/Sebi55/hcaptcha"
+      version: "0.0.1",
       elixir: "~> 1.6",
       description: description(),
       deps: deps(),
@@ -56,7 +58,7 @@ defmodule Hcaptcha.Mixfile do
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
       maintainers: ["Sebastian Grebe"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/Sebi55/hcaptcha"}
+      links: %{"GitHub" => "https://github.com/Sebi55/hcaptcha", "Forked" => "https://github.com/samueljseay/recaptcha"}
     ]
   end
 end

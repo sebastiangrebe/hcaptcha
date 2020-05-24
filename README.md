@@ -6,6 +6,13 @@ A simple Elixir package for implementing [hCAPTCHA] in Elixir applications.
 
 [hCAPTCHA]: https://www.hcaptcha.com/
 
+The package is fork of the [recaptcha] package which uses the same flow as needed for hCaptcha. It would also be possible to integrate hCaptcha in this package but I was not able to wait for PRs to be merged so I just forked the repo.
+
+[recaptcha]: https://github.com/samueljseay/recaptcha
+
+### Important Notice
+The repo is works for me but is not tested that all configuration options or callback given by hCaptcha are processed correctly. Feel free to open PRs to resolve dependencies on the recaptcha API.
+
 ## Installation
 
 1. Add hcaptcha to your `mix.exs` dependencies
