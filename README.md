@@ -11,7 +11,7 @@ The package is fork of the [recaptcha] package which uses the same flow as neede
 [recaptcha]: https://github.com/samueljseay/recaptcha
 
 ### Important Notice
-The repo is works for me but is not tested that all configuration options or callbacks given by hCaptcha are processed correctly. Feel free to open PRs to resolve dependencies on the recaptcha API.
+The repo works for me but is not tested that all configuration options or callbacks given by hCaptcha are processed correctly. Feel free to open PRs to resolve dependencies on the recaptcha API.
 
 ## Installation
 
