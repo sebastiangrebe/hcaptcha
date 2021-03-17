@@ -1,9 +1,8 @@
 defmodule Hcaptcha do
   @moduledoc """
-    A module for verifying hCAPTCHA version 2.0 response strings.
+    A module for verifying hCAPTCHA version 1 response strings.
 
-    See the [documentation](https://developers.google.com/hcaptcha/docs/verify)
-    for more details.
+    See the [documentation](https://docs.hcaptcha.com/) for more details.
   """
 
   alias Hcaptcha.{Config, Http, Response}
