@@ -111,7 +111,7 @@ Hcaptcha provides the `verify/2` method. Below is an example using a Phoenix con
 
 ```elixir
   def create(conn, params) do
-    case Hcaptcha.verify(params["h-aptcha-response"]) do
+    case Hcaptcha.verify(params["h-captcha-response"]) do
       {:ok, response} -> do_something
       {:error, errors} -> handle_error
     end
