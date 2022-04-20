@@ -1,4 +1,4 @@
-<script src="https://www.hCaptcha.com/1/api.js?<%= @options[:onload] %>hl=<%= @options[:hl] %>" async defer></script>
+<script src="https://js.hcaptcha.com/1/api.js?<%= @options[:onload] %>hl=<%= @options[:hl] %>" async defer></script>
 
 <%= if @options[:size] == "invisible" do %>
 <script type="text/javascript">
