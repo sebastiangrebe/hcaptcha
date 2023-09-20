@@ -9,7 +9,7 @@
 
     form = this;
 
-    var hcaptchaObject = this.querySelector('div[class="g-hcaptcha"]');
+    var hcaptchaObject = this.querySelector('div[class="h-captcha"]');
 
     if (hcaptchaObject) {
       ghcaptcha.execute();
