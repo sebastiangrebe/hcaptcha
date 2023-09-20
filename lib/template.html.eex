@@ -12,7 +12,7 @@
     var hcaptchaObject = this.querySelector('div[class="h-captcha"]');
 
     if (hcaptchaObject) {
-      ghcaptcha.execute();
+      window.hcaptcha.execute();
     } else {
       this.submit();
     }
