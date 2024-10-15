@@ -7,7 +7,7 @@ defmodule Hcaptcha do
 
   alias Hcaptcha.{Config, Http, Response}
 
-  @http_client Application.get_env(:hcaptcha, :http_client, Http)
+  @http_client Application.compile_env(:hcaptcha, :http_client, Http)
 
   @doc """
   Verifies a hCAPTCHA response string.
