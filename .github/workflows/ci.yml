@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MIX_ENV: test
+  ELIXIRC_WARNINGS_AS_ERRORS: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-and-test:
+    name: Validate code and run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Set up Elixir and Erlang using erlef/setup-beam
+      - name: Set up elixir
+        id: elixir-install
+        uses: erlef/setup-beam@v1
+        with:
+          version-file: .tool-versions
+          version-type: strict
+
+      # Restore dependencies cache
+      - name: Restore dependencies/compile cache
+        uses: actions/cache/restore@v3
+        id: mix-cache
+        with:
+          path: |
+            deps
+            _build
+          key: mix-${{ runner.os }}-${{ steps.elixir-install.outputs.elixir-version }}-${{ steps.elixir-install.outputs.otp-version }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: mix-${{ runner.os }}-
+
+      # Install dependencies if no cache is available
+      - name: Install dependencies
+        if: steps.mix-cache.outputs.cache-hit != 'true'
+        run: mix deps.get --check-locked
+
+      # Compile the project
+      - name: Check compilation
+        run: mix compile --warnings-as-errors
+
+      # Save dependencies/compile cache after compilation
+      # We're saving after compilation because results are stored.
+      # We don't check the initial cache state (hit/miss) when storing
+      # because we'll save the cache to our branch scope.
+      - name: Saving dependencies/compile cache
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ steps.mix-cache.outputs.cache-primary-key }}
+
+      # Run formatting check
+      - name: Check formatting
+        run: mix format --check-formatted
+
+      # Restore PLT cache for Dialyzer
+      - name: Restore PLT cache
+        id: plt-cache
+        uses: actions/cache/restore@v3
+        with:
+          key: plt-${{ runner.os }}-${{ steps.elixir-install.outputs.otp-version }}-${{ steps.elixir-install.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: plt-${{ runner.os }}-${{ steps.elixir-install.outputs.otp-version }}-${{ steps.elixir-install.outputs.elixir-version }}-
+          path: priv/plts
+
+      # Create Dialyzer PLTs if no cache is found
+      - name: Create PLTs
+        if: steps.plt-cache.outputs.cache-hit != 'true'
+        run: mix dialyzer --plt
+
+      # Save PLT cache after Dialyzer run
+      - name: Save PLT cache
+        id: plt-cache-save
+        uses: actions/cache/save@v3
+        if: steps.plt-cache.outputs.cache-hit != 'true'
+        with:
+          key: plt-${{ runner.os }}-${{ steps.elixir-install.outputs.otp-version }}-${{ steps.elixir-install.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+          path: priv/plts
+
+      # Run Dialyzer
+      - name: Run dialyzer
+        run: mix dialyzer --format github
+
+      # Run tests
+      - name: Run tests
+        run: mix test
+
+      # Run Credo for static analysis
+      - name: Run Credo
+        run: mix credo --strict
