@@ -58,7 +58,7 @@ defmodule Hcaptcha.Mixfile do
       {:jason, "~> 1.4", optional: true},
       {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
       {:ex_doc, "0.30.6", only: :dev},
-      {:dialyxir, "~> 1.4.1", only: [:test]},
+      {:dialyxir, "~> 1.4.1", only: [:test], runtime: false},
       {:excoveralls, "~> 0.17.1", only: :test}
     ]
   end

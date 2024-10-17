@@ -45,9 +45,8 @@ defmodule Hcaptcha.Http do
 
     result =
       with {:ok, response} <-
-             HTTPoison.post(url, body, @headers, timeout: timeout),
-           {:ok, data} <- @json_library.decode(response.body) do
-        {:ok, data}
+             HTTPoison.post(url, body, @headers, timeout: timeout) do
+        @json_library.decode(response.body)
       end
 
     case result do

@@ -2,7 +2,7 @@ defmodule HcaptchaTest do
   use ExUnit.Case, async: true
 
   # see https://docs.hcaptcha.com/#integration-testing-test-keys
-  @hCaptcha_test_secret "0x0000000000000000000000000000000000000000"
+  @hcaptcha_test_secret "0x0000000000000000000000000000000000000000"
 
   test "When the supplied hcaptcha-response is invalid, errors are returned" do
     assert {:error, messages} = Hcaptcha.verify("not_valid")
@@ -12,13 +12,13 @@ defmodule HcaptchaTest do
   test "When a valid response is supplied, a success response is returned" do
     assert {:ok, %{challenge_ts: _, hostname: _}} =
              Hcaptcha.verify("10000000-aaaa-bbbb-cccc-000000000001",
-               secret: @hCaptcha_test_secret
+               secret: @hcaptcha_test_secret
              )
   end
 
   test "When an invalid response is supplied, an error response is returned" do
     assert {:error, [:invalid_input_response]} =
-             Hcaptcha.verify("invalid_response", secret: @hCaptcha_test_secret)
+             Hcaptcha.verify("invalid_response", secret: @hcaptcha_test_secret)
   end
 
   test "When secret is not overridden the configured secret is used" do
