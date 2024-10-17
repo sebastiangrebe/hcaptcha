@@ -120,9 +120,9 @@ Hcaptcha provides the `verify/2` method. Below is an example using a Phoenix con
 
 `verify` method sends a `POST` request to the hCAPTCHA API and returns 2 possible values:
 
-`{:ok, %Hcaptcha.Response{challenge_ts: timestamp, hostname: host}}` -> The captcha is valid, see the [documentation](https://developers.google.com/hcaptcha/docs/verify#api-response) for more details.
+`{:ok, %Hcaptcha.Response{challenge_ts: timestamp, hostname: host}}` -> The captcha is valid, see the [documentation](https://docs.hcaptcha.com/#verify-the-user-response-server-side) for more details.
 
-`{:error, errors}` -> `errors` contains atomised versions of the errors returned by the API, See the [error documentation](https://developers.google.com/hcaptcha/docs/verify#error-code-reference) for more details. Errors caused by timeouts in HTTPoison or Jason encoding are also returned as atoms. If the hcaptcha request succeeds but the challenge is failed, a `:challenge_failed` error is returned.
+`{:error, errors}` -> `errors` contains atomised versions of the errors returned by the API, See the [error documentation](https://docs.hcaptcha.com/#siteverify-error-codes-table) for more details. Errors caused by timeouts in HTTPoison or Jason encoding are also returned as atoms. If the hcaptcha request succeeds but the challenge is failed, a `:challenge_failed` error is returned.
 
 `verify` method also accepts a keyword list as the third parameter with the following options:
 

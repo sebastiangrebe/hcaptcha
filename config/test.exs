@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :hcaptcha,
   http_client: Hcaptcha.Http.MockClient,

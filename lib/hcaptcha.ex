@@ -9,6 +9,26 @@ defmodule Hcaptcha do
 
   @http_client Application.compile_env(:hcaptcha, :http_client, Http)
 
+  # https://docs.hcaptcha.com/#siteverify-error-codes-table
+  @error_codes_map %{
+    # Your secret key is missing.
+    "missing-input-secret" => :missing_input_secret,
+    # Your secret key is invalid or malformed.
+    "invalid-input-secret" => :invalid_input_secret,
+    # The response parameter (verification token) is missing.
+    "missing-input-response" => :missing_input_response,
+    # The response parameter (verification token) is invalid or malformed.
+    "invalid-input-response" => :invalid_input_response,
+    # The request is invalid or malformed.
+    "bad-request" => :bad_request,
+    # The response parameter has already been checked, or has another issue.
+    "invalid-or-already-seen-response" => :invalid_or_already_seen_response,
+    # You have used a testing sitekey but have not used its matching secret.
+    "not-using-dummy-passcode" => :not_using_dummy_passcode,
+    # The sitekey is not registered with the provided secret.
+    "sitekey-secret-mismatch" => :sitekey_secret_mismatch
+  }
+
   @doc """
   Verifies a hCAPTCHA response string.
 
@@ -61,10 +81,6 @@ defmodule Hcaptcha do
   end
 
   defp atomise_api_error(error) do
-    # See why we are using `to_atom` here:
-    # https://github.com/samueljseay/recaptcha/pull/28#issuecomment-313604733
-    error
-    |> String.replace("-", "_")
-    |> String.to_atom()
+    Map.get(@error_codes_map, error, :unknown_error)
   end
 end

@@ -5,9 +5,9 @@ defmodule Hcaptcha.Mixfile do
     [
       app: :hcaptcha,
       name: "hcaptcha",
-      source_url: "https://github.com/Sebi55/hcaptcha",
-      version: "0.0.2",
-      elixir: "~> 1.6",
+      source_url: "https://github.com/A-World-For-Us/hcaptcha",
+      version: "0.1.0",
+      elixir: "~> 1.15",
       description: description(),
       deps: deps(),
       package: package(),
@@ -31,10 +31,6 @@ defmodule Hcaptcha.Mixfile do
     ]
   end
 
-  def application do
-    [applications: [:logger, :httpoison, :eex]]
-  end
-
   defp description do
     """
     A simple hCaptcha package for Elixir applications, provides verification
@@ -44,21 +40,24 @@ defmodule Hcaptcha.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.8"},
-      {:jason, "~> 1.0", optional: true},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:ex_doc, "0.19.3", only: :dev},
-      {:dialyxir, "~> 0.5", only: [:dev]},
-      {:excoveralls, "~> 0.7.1", only: :test}
+      {:httpoison, "~> 2.1"},
+      {:jason, "~> 1.4", optional: true},
+      {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
+      {:ex_doc, "0.30.6", only: :dev},
+      {:dialyxir, "~> 1.4.1", only: [:dev]},
+      {:excoveralls, "~> 0.17.1", only: :test}
     ]
   end
 
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
-      maintainers: ["Sebastian Grebe"],
+      maintainers: ["Antoine Bolvy"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/Sebi55/hcaptcha", "Forked" => "https://github.com/samueljseay/recaptcha"}
+      links: %{
+        "GitHub" => "https://github.com/Sebi55/hcaptcha",
+        "Forked" => "https://github.com/samueljseay/recaptcha"
+      }
     ]
   end
 end

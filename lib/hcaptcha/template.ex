@@ -20,8 +20,7 @@ defmodule Hcaptcha.Template do
   To convert the string to html code, use Phoenix.HTML.Raw/1 method
   """
   def display(options \\ []) do
-    public_key =
-      options[:public_key] || Config.get_env(:hcaptcha, :public_key)
+    public_key = options[:public_key] || Config.get_env(:hcaptcha, :public_key)
 
     callback =
       if options[:size] == "invisible" && is_nil(options[:callback]) do
