@@ -52,8 +52,6 @@ defmodule Hcaptcha.Http do
 
     case result do
       {:ok, data} -> {:ok, data}
-      {:error, :invalid} -> {:error, [:invalid_api_response]}
-      {:error, {:invalid, _reason}} -> {:error, [:invalid_api_response]}
       {:error, %{reason: reason}} -> {:error, [reason]}
     end
   end
