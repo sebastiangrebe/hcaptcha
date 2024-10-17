@@ -37,6 +37,14 @@ defmodule Hcaptcha.Mixfile do
     ]
   end
 
+  def cli do
+    [
+      preferred_envs: [
+        dialyzer: :test
+      ]
+    ]
+  end
+
   defp description do
     """
     A simple hCaptcha package for Elixir applications, provides verification
@@ -50,7 +58,7 @@ defmodule Hcaptcha.Mixfile do
       {:jason, "~> 1.4", optional: true},
       {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
       {:ex_doc, "0.30.6", only: :dev},
-      {:dialyxir, "~> 1.4.1", only: [:dev]},
+      {:dialyxir, "~> 1.4.1", only: [:test]},
       {:excoveralls, "~> 0.17.1", only: :test}
     ]
   end
