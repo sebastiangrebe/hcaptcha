@@ -27,15 +27,6 @@ defmodule HcaptchaTemplateTest do
     assert template_string =~ "data-sitekey=\"override_test_public_key\""
   end
 
-  test "supplying noscript option displays the noscript fallback" do
-    template_string = Hcaptcha.Template.display(noscript: true)
-
-    assert template_string =~ "<noscript>"
-
-    assert template_string =~
-             "https://www.google.com/hcaptcha/api/fallback?k=test_public_key"
-  end
-
   test "supplying a hl in options to display/1 overrides it in the script tag" do
     template_string = Hcaptcha.Template.display(hl: "en")
     assert template_string =~ "https://www.google.com/hcaptcha/api.js?hl=en"

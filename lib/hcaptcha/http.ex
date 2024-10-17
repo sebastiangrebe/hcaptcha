@@ -17,7 +17,7 @@ defmodule Hcaptcha.Http do
   @doc """
   Sends an HTTP request to the hCAPTCHA version 2.0 API.
 
-  See the [docs](https://developers.google.com/hcaptcha/docs/verify#api-response)
+  See the [docs](https://docs.hcaptcha.com/#verify-the-user-response-server-side)
   for more details on the API response.
 
   ## Options

@@ -1,9 +1,6 @@
 defmodule Hcaptcha.Template do
   @moduledoc """
-    Responsible for rendering boilerplate hcaptcha HTML code, supports noscript fallback.
-
-    [Some](https://developers.google.com/hcaptcha/docs/display#explicit_render)
-    functionality is not currently supported.
+    Responsible for rendering boilerplate hcaptcha HTML code.
 
     In future this module may be separated out into a Phoenix specific library.
   """

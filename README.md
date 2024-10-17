@@ -101,7 +101,6 @@ function myOnLoadCallback() {
 
 Option                  | Action                                                 | Default
 :---------------------- | :----------------------------------------------------- | :------------------------
-`noscript`              | Renders default noscript code provided by google       | `false`
 `public_key`            | Sets key to the `data-sitekey` hCaptcha div attribute | Public key from the config file
 `hl`                    | Sets the language of the hCaptcha                     | en
 
