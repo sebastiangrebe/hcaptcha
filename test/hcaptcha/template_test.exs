@@ -29,7 +29,7 @@ defmodule HcaptchaTemplateTest do
 
   test "supplying a hl in options to display/1 overrides it in the script tag" do
     template_string = Hcaptcha.Template.display(hl: "en")
-    assert template_string =~ "https://www.google.com/hcaptcha/api.js?hl=en"
+    assert template_string =~ "https://js.hcaptcha.com/1/api.js?hl=en"
   end
 
   test "supplying a onload in options to display/1 adds it to the script tag" do
@@ -37,18 +37,18 @@ defmodule HcaptchaTemplateTest do
     template_string2 = Hcaptcha.Template.display(onload: "onLoad", hl: "en")
 
     assert template_string1 =~
-             "https://www.google.com/hcaptcha/api.js?onload=onLoad&hl"
+             "https://js.hcaptcha.com/1/api.js?onload=onLoad&hl"
 
     assert template_string2 =~
-             "https://www.google.com/hcaptcha/api.js?onload=onLoad&hl=en"
+             "https://js.hcaptcha.com/1/api.js?onload=onLoad&hl=en"
   end
 
   test "supplying a invisible hcaptcha on option size equal invisible" do
     template_string = Hcaptcha.Template.display(size: "invisible")
-    assert template_string =~ "ghcaptcha.execute()"
+    assert template_string =~ "window.hcaptcha.execute()"
 
     template_string = Hcaptcha.Template.display(size: "compact")
-    refute template_string =~ "ghcaptcha.execute()"
+    refute template_string =~ "window.hcaptcha.execute()"
   end
 
   test "supplying an option to change the callback even if you are using invisible hcaptcha" do

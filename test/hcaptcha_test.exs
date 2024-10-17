@@ -1,21 +1,23 @@
 defmodule HcaptchaTest do
   use ExUnit.Case, async: true
 
-  # see https://developers.google.com/hcaptcha/docs/faq#id-like-to-run-automated-tests-with-hcaptcha-v2-what-should-i-do
+  # see https://docs.hcaptcha.com/#integration-testing-test-keys
   @hCaptcha_test_secret "0x0000000000000000000000000000000000000000"
 
-  test "When the supplied hcaptcha-response is invalid, multiple errors are returned" do
+  test "When the supplied hcaptcha-response is invalid, errors are returned" do
     assert {:error, messages} = Hcaptcha.verify("not_valid")
-    assert messages == [:invalid_input_response, :invalid_input_secret]
+    assert messages == [:invalid_input_response]
   end
 
   test "When a valid response is supplied, a success response is returned" do
     assert {:ok, %{challenge_ts: _, hostname: _}} =
-             Hcaptcha.verify("valid_response", secret: @hCaptcha_test_secret)
+             Hcaptcha.verify("10000000-aaaa-bbbb-cccc-000000000001",
+               secret: @hCaptcha_test_secret
+             )
   end
 
-  test "When a valid response is supplied, an error response is returned" do
-    assert {:error, [:"invalid-input-response"]} =
+  test "When an invalid response is supplied, an error response is returned" do
+    assert {:error, [:invalid_input_response]} =
              Hcaptcha.verify("invalid_response", secret: @hCaptcha_test_secret)
   end
 
