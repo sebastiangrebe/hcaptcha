@@ -12,10 +12,12 @@ defmodule Hcaptcha.Http do
 
   @default_verify_url "https://hcaptcha.com/siteverify"
 
+  @json_library Application.compile_env(:hcaptcha, :json_library, Jason)
+
   @doc """
   Sends an HTTP request to the hCAPTCHA version 2.0 API.
 
-  See the [docs](https://developers.google.com/hcaptcha/docs/verify#api-response)
+  See the [docs](https://docs.hcaptcha.com/#verify-the-user-response-server-side)
   for more details on the API response.
 
   ## Options
@@ -40,19 +42,15 @@ defmodule Hcaptcha.Http do
   def request_verification(body, options \\ []) do
     timeout = options[:timeout] || Config.get_env(:hcaptcha, :timeout, 5000)
     url = Config.get_env(:hcaptcha, :verify_url, @default_verify_url)
-    json = Application.get_env(:hcaptcha, :json_library, Jason)
 
     result =
       with {:ok, response} <-
-             HTTPoison.post(url, body, @headers, timeout: timeout),
-           {:ok, data} <- json.decode(response.body) do
-        {:ok, data}
+             HTTPoison.post(url, body, @headers, timeout: timeout) do
+        @json_library.decode(response.body)
       end
 
     case result do
       {:ok, data} -> {:ok, data}
-      {:error, :invalid} -> {:error, [:invalid_api_response]}
-      {:error, {:invalid, _reason}} -> {:error, [:invalid_api_response]}
       {:error, %{reason: reason}} -> {:error, [reason]}
     end
   end

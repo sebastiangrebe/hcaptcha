@@ -5,9 +5,9 @@ defmodule Hcaptcha.Mixfile do
     [
       app: :hcaptcha,
       name: "hcaptcha",
-      source_url: "https://github.com/Sebi55/hcaptcha",
-      version: "0.0.2",
-      elixir: "~> 1.6",
+      source_url: "https://github.com/A-World-For-Us/hcaptcha",
+      version: "0.1.0",
+      elixir: "~> 1.15",
       description: description(),
       deps: deps(),
       package: package(),
@@ -25,14 +25,24 @@ defmodule Hcaptcha.Mixfile do
 
       # Dialyzer:
       dialyzer: [
-        plt_add_deps: :apps_direct,
-        plt_add_apps: [:jason]
+        list_unused_filters: true,
+        # Put the project-level PLT in the priv/ directory (instead of the default _build/ location)
+        # for the CI to be able to cache it between builds
+        plt_local_path: "priv/plts/project.plt",
+        plt_core_path: "priv/plts/core.plt",
+        # Add `:mix` to the list of apps to include in the PLT, allowing dialyzer to
+        # know about the `Mix` functions and `Mix.Task` behaviour
+        plt_add_apps: [:mix, :iex]
       ]
     ]
   end
 
-  def application do
-    [applications: [:logger, :httpoison, :eex]]
+  def cli do
+    [
+      preferred_envs: [
+        dialyzer: :test
+      ]
+    ]
   end
 
   defp description do
@@ -44,21 +54,24 @@ defmodule Hcaptcha.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.8"},
-      {:jason, "~> 1.0", optional: true},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:ex_doc, "0.19.3", only: :dev},
-      {:dialyxir, "~> 0.5", only: [:dev]},
-      {:excoveralls, "~> 0.7.1", only: :test}
+      {:httpoison, "~> 2.1"},
+      {:jason, "~> 1.4", optional: true},
+      {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
+      {:ex_doc, "0.37.1", only: :dev},
+      {:dialyxir, "~> 1.4.1", only: [:test], runtime: false},
+      {:excoveralls, "~> 0.18.3", only: :test}
     ]
   end
 
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
-      maintainers: ["Sebastian Grebe"],
+      maintainers: ["Antoine Bolvy"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/Sebi55/hcaptcha", "Forked" => "https://github.com/samueljseay/recaptcha"}
+      links: %{
+        "GitHub" => "https://github.com/Sebi55/hcaptcha",
+        "Forked" => "https://github.com/samueljseay/recaptcha"
+      }
     ]
   end
 end
